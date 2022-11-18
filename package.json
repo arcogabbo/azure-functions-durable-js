@@ -39,7 +39,6 @@
         "e2etst": "npm run "
     },
     "dependencies": {
-        "@azure/functions": "^1.2.3",
         "axios": "^0.21.1",
         "debug": "~2.6.9",
         "lodash": "^4.17.15",
@@ -48,6 +47,7 @@
         "moment": "^2.29.2"
     },
     "devDependencies": {
+        "@azure/functions": "^3.2.0",
         "@types/chai": "~4.1.6",
         "@types/chai-as-promised": "~7.1.0",
         "@types/chai-string": "~1.4.1",

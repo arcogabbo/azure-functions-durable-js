@@ -1,6 +1,6 @@
 // tslint:disable:member-access
 
-import { HttpRequest } from "@azure/functions";
+import { Form, HttpRequest } from "@azure/functions";
 import chai = require("chai");
 import chaiAsPromised = require("chai-as-promised");
 import { isEqual } from "lodash";
@@ -23,6 +23,16 @@ import { TestUtils } from "../testobjects/testutils";
 
 const expect = chai.expect;
 chai.use(chaiAsPromised);
+
+const testForm: Form = {
+    get: () => null,
+    getAll: () => [],
+    has: () => false,
+    length: 0,
+    [Symbol.iterator]: function* () {
+        yield ["", { value: Buffer.of(0) }];
+    },
+};
 
 describe("Orchestration Client", () => {
     before(() => {
@@ -71,6 +81,8 @@ describe("Orchestration Client", () => {
                 headers: {},
                 query: {},
                 params: {},
+                user: null,
+                parseFormBody: () => testForm,
             };
 
             const response = client.createCheckStatusResponse(requestObj, defaultInstanceId);
@@ -1118,6 +1130,8 @@ describe("Orchestration Client", () => {
             headers: {},
             query: {},
             params: {},
+            user: null,
+            parseFormBody: () => testForm,
         };
         const defaultTimeout = 50;
         const defaultInterval = 10;

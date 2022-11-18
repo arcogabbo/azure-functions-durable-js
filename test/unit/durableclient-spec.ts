@@ -1,4 +1,4 @@
-import { HttpRequest } from "@azure/functions";
+import { Form, HttpRequest } from "@azure/functions";
 import chai = require("chai");
 import chaiString = require("chai-string");
 import nock = require("nock");
@@ -17,6 +17,16 @@ import {
 chai.use(chaiString);
 const expect = chai.expect;
 const URL = url.URL;
+
+const testForm: Form = {
+    get: () => null,
+    getAll: () => [],
+    has: () => false,
+    length: 0,
+    [Symbol.iterator]: function* () {
+        yield ["", { value: Buffer.of(0) }];
+    },
+};
 
 // DNS failures are expected if we accidentally try to reach this fake domain (durable.gov).
 const externalOrigin = "https://durable.gov";
@@ -75,6 +85,8 @@ describe("Durable client RPC endpoint", () => {
                 headers: {},
                 query: {},
                 params: {},
+                user: null,
+                parseFormBody: () => testForm,
             };
 
             const instanceId = "abc123";

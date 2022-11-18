@@ -94,7 +94,10 @@ class MockContext<T> implements IEntityFunctionContext<T> {
     traceContext: TraceContext;
     public invocationId: string;
     public executionContext: ExecutionContext;
-    public bindingData: { [key: string]: any };
+    public bindingData: {
+        invocationId: string;
+        [name: string]: any;
+    };
     public bindingDefinitions: BindingDefinition[];
     public log: Logger;
     public req?: HttpRequest | undefined;
